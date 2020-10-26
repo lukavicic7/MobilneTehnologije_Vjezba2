@@ -27,15 +27,16 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<GitHubData> call, Response<GitHubData> response) {
                 if (!response.isSuccessful()) {
                     int statusCode = response.code();
+                    String errorData = response.errorBody().toString();
                 }
                 else {
-                    GitHubData data = response.body();
+                    GitHubData apiData = response.body();
                 }
             }
 
             @Override
             public void onFailure(Call<GitHubData> call, Throwable t) {
-
+                String errorData = t.getMessage();
             }
         });
     }
