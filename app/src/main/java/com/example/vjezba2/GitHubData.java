@@ -64,4 +64,5 @@ public class GitHubData implements Serializable
         this.items = items;
     }
 
+
 }

@@ -6,5 +6,5 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 public interface GitHubApiInterface {
     @GET("search/repositories?q=stars:>200000")
-    Call<List<GitHubData>> getData();
+    Call<GitHubData> getData();
 }
