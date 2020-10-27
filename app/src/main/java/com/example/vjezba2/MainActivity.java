@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -13,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,19 +43,12 @@ public class MainActivity extends AppCompatActivity {
         final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        MyData myDataset1 = new MyData("a","ime1","100000");
-        MyData myDataset2 = new MyData("a","ime2", "150000");
-        MyData myDataset3 = new MyData("a","ime3", "200000");
-        MyData myDataset4 = new MyData("a", "ime4","30000");
+
         final ArrayList<MyData> myDataset = new ArrayList<MyData>();
-        myDataset.add(myDataset1);
-        myDataset.add(myDataset2);
-        myDataset.add(myDataset3);
-        myDataset.add(myDataset4);
 
         final RecyclerView.Adapter adapter = new MyAdapter(myDataset);
         recyclerView.setAdapter(adapter);
-
+        /*
         String url = "https://run.mocky.io/v3/00c17ed2-4343-4e69-a328-e948353d0cda";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Listener<JSONObject>() {
@@ -88,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonObjectRequest);
-
+*/
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -104,13 +99,22 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     GitHubData apiData = response.body();
+                    List<Item> itemList = apiData.getItems();
+                    for (int i=0;i<itemList.size();i++){
+                        Owner o = itemList.get(i).getOwner();
+                        MyData myData = new MyData(o.getAvatarUrl(),itemList.get(i).getName(),itemList.get(i).getStargazersCount().toString());
+                        myDataset.add(myData);
+                        Log.d("Item", myData.avatar_url + "\n"+ myData.numberOfStars + "\n"+myData.repositoryName);
+                        adapter.notifyDataSetChanged();
+                    }
+                    /*itemList = apiData.getItems();*/
                 }
             }
-
             @Override
             public void onFailure(Call<GitHubData> call, Throwable t) {
                 String errorData = t.getMessage();
             }
         });
+
     }
 }

@@ -9,9 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
     private ArrayList<MyData> mDataset;
 
     public static class MyViewHolder extends  RecyclerView.ViewHolder {
@@ -44,11 +48,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
         holder.imageView1.setImageResource(R.drawable.index);
         holder.textView1.setText(mDataset.get(position).repositoryName);
         holder.textView2.setText(mDataset.get(position).numberOfStars);
     }
-
     @Override
     public int getItemCount() {
         return mDataset.size();
