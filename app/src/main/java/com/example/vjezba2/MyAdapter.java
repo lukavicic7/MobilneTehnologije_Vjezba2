@@ -15,9 +15,12 @@ import com.bumptech.glide.RequestManager;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-
+    private RequestManager glide;
     private ArrayList<MyData> mDataset;
-
+    MyAdapter(RequestManager glide,ArrayList<MyData> mDataset){
+        this.glide=glide;
+        this.mDataset = mDataset;
+    }
     public static class MyViewHolder extends  RecyclerView.ViewHolder {
 
         public ImageView imageView1;
@@ -48,8 +51,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-        holder.imageView1.setImageResource(R.drawable.index);
+        glide.load(mDataset.get(position).avatar_url).into(holder.imageView1);
+        /*holder.imageView1.setImageResource(R.drawable.index);*/
         holder.textView1.setText(mDataset.get(position).repositoryName);
         holder.textView2.setText(mDataset.get(position).numberOfStars);
     }

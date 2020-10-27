@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         final ArrayList<MyData> myDataset = new ArrayList<MyData>();
 
-        final RecyclerView.Adapter adapter = new MyAdapter(myDataset);
+        final RecyclerView.Adapter adapter = new MyAdapter(Glide.with(this),myDataset);
         recyclerView.setAdapter(adapter);
         /*
         String url = "https://run.mocky.io/v3/00c17ed2-4343-4e69-a328-e948353d0cda";
